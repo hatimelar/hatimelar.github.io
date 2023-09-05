@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <title>Pixel Art Converter - Convert an Image to Pixel Art</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="keywords" content="pixel art generator, pixel art, pixel art AI, pixel art converter">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" type="text/css" href="styles_r.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body class>
+<!--Navigation bar-->
+  <div class="nav">
+    <a class="navitem active"  href="#Home"> <i class="material-icons" style="font-size:calc(15px + 0.390625vh);color:white;">home</i> Home</a>
+    <a class="navitem" href="#Home"> <i class="material-icons" style="font-size:calc(15px + 0.390625vh);color:white;">collections</i> Gallery</a>
+    <a class="navitem" href="#Home"><i class="material-icons" style="font-size:calc(15px + 0.390625vh);color:white;">brush</i> Converter</a>
+  </div>
+  <!-- Intro content-->
+  <div class="row">
+  <div class="introContent col-5">
+    <h1 style="font-size:3rem;color:#FFFFFF;">Pixel Art Converter</h1>
+    <h2 style="font-size:2rem;color:#CCCCCC"> Convert images into quality pixel art</h2>
+    <h3 style="font-size:1.5rem;color:#CCCCCC"> This webapp provides the user the ability to transform images into pixel art. The app allows for customizable outputs, providing the user the choice
+       between various dithering methods, auto-generated and custom color palettes, as well as the intensity of the scaling.
+    </h3>
+  </div>
+
+  <!-- The container that holds the slideshow, descriptions, buttons, etc-->
+  <div id="slideshowContainer" class="col-7">
+  <h2 style="margin-bottom:20px;color:#CCCCCC;">Examples</h2>
+  <!--slideshow holds the bare minimum that makes the slideshow, i.e. main buttons and slides-->
+  <div id="slideshow">
+    <div class="slide" id="slide_0">
+      <div class="afterImageContainer">
+      <img id="image_0a" src="demo0.jpg" alt="demo_0a"></img>
+      </div>
+      <div class="beforeImageContainer">
+      <img id="image_0b" src="demo0Og.jpg" alt="demo_0b"></img>
+      </div>
+    </div>
+
+    <div class="slide" id="slide_1" >
+      <div class="afterImageContainer">
+      <img id="image_1a" src="demo1.jpg" alt="demo_1a"></img>
+      </div>
+      <div class="beforeImageContainer">
+      <img id="image_1b" src="demo1Og.jpg" alt="demo_1b"></img>
+      </div>
+    </div>
+
+    <div class="slide" id="slide_2">
+      <div class="afterImageContainer">
+      <img id="image_2a" src="demo2.jpg" alt="demo_2a"></img>
+      </div>
+      <div class="beforeImageContainer">
+      <img id="image_2b" src="demo2Og.jpg" alt="demo_2b"></img>
+      </div>
+    </div>
+
+    <div class="slide" id="slide_3">
+      <div class="afterImageContainer">
+      <img id="image_3a" src="demo3.jpg" alt="demo_3a"></img>
+      </div>
+      <div class="beforeImageContainer">
+      <img id="image_3b" src="demo3Og.jpg" alt="demo_3b"></img>
+      </div>
+    </div>
+
+    <div class="slide" id="slide_4">
+      <div class="afterImageContainer">
+      <img id="image_4a" src="demo4.jpg" alt="demo_4a"></img>
+      </div>
+      <div class="beforeImageContainer">
+      <img id="image_4b" src="demo4Og.jpg" alt="demo_4b"></img>
+      </div>
+    </div>
+    <!-- Before/after slider-->
+    <input id="baSlider" type="range" class="slider" min="0" max="100" value="50">
+    <div class="sliderButton"></div>
+    <!--Slide navigation buttons-->
+    <a class="button buttonLeft" onclick="slideAdd(-1)"><i class="material-icons buttonIcon">chevron_left</i> </a>
+    <a class="button buttonRight" onclick="slideAdd(1)"><i class="material-icons buttonIcon">chevron_right</i> </a>
+    </div> <!--End of slideshow-->
+    <!-- Slideshow navigation dots-->
+    <div class="slideShowDots">
+      <span class="dot active" onclick="goToSlide(0)"></span>
+      <span class="dot" onclick="goToSlide(1)"></span>
+      <span class="dot" onclick="goToSlide(2)"></span>
+      <span class="dot" onclick="goToSlide(3)"></span>
+      <span class="dot" onclick="goToSlide(4)"></span>
+    </div>
+    </div> <!--End of slideshow container-->
+  </div> <!--End of row-->
+
+  <div class="row" id="converter">
+    <h1 style="padding:20px;color:#CCCCCC">Converter</h1>
+      <div id="uploadBoxContainer">
+        <p style="margin-top:0;color:rgba(255,255,255,0.7);">Upload your image:</p>
+          <div id="uploadBox">
+          <form>
+          <i class="material-icons" style="font-size:4rem;color:#00ADB5;">add_photo_alternate</i>
+          <p style="color:rgba(255,255,255,0.7)">Drag&Drop an image<br>or</p>
+          <label id="uploadImageButton" for="fileup">Browse files</label>
+          <input style="display:none" type="file" accept="image/*" id="fileup" >
+          </form>
+          </div> <!--Uploadbox end-->
+      </div><!--uploadBoxContainer end-->
+      <div id="selectedImageContainer"><span style="margin:0;color:rgba(255,255,255,0.7);">Selected image:</span> 
+        <span id="selectedImage">None</span> <!--The name of the uploaded image-->
+        <image id="UploadedImagePreview" src="" alt=""> <!--Preview of the uploaded image-->
+      </div>
+  </div> <!--End of converter-->
+
+    <!--Customization container-->
+    <div id="customizationContainer" style="position:relative">
+      <!--Auto generated palette-->
+      <label>
+      <div class="paletteSelectionContainer row">
+        <div class="paletteSelectionCircle">
+          <input type="radio" name="radio" checked="checked" id="autoPaletteChecked" onchange="autoPaletteChecked()">
+          <span class="checkbox"></span>
+        </div>
+        <div class="paletteSelectionText">
+          <span style="color:white;">Auto generate palette</span>
+        </div>
+      </div>
+      </label>
+
+      <!--Auto generated palette config container -->
+      <div id="autoGenPaletteConfigContainer">
+        <label for="paletteSizeSelect" style="color:rgba(255,255,255,0.7);padding-right:10px;">Palette size:</label>
+        <select name="paletteSize" id="paletteSizeSelect">
+          <option value="2">2</option>
+          <option value="4">4</option>
+          <option value="8">8</option>
+          <option value="16" selected>16</option>
+          <option value="32">32</option>
+          <option value="64">64</option>
+          <option value="128">128</option>
+          <option value="256">256</option>
+          <option value="512">512</option> 
+        </select>
+      </div>
+
+      <!--Custom palette selection container-->
+      <label>
+      <div style="margin-top:8px" class="paletteSelectionContainer row">
+        <div class="paletteSelectionCircle">
+          <input type="radio" name="radio" id="customPaletteChecked" onchange="customPaletteChecked()">
+          <span class="checkbox"></span>
+        </div>
+        <div class="paletteSelectionText">
+          <span style="color:white;">Select custom palette</span>
+        </div>
+      </div>
+      </label>
+
+      <div id="customPalleteConfigContainer">
+        <div id ="customPaletteSelectContainer" onclick="showCustomPaletteDropdown()">
+          <div id ="customPaletteSelect"><div id="customPaletteSelectArrow"></div>
+            <div id="selectedPalette"></div>
+          </div>
+          <div id="customPaletteDropdown"></div>
+        </div>
+      </div>
+
+      <!--Pixel dimension conntainer-->
+      <div id="pixelSettingsContainer">
+        <span style="margin-right:5px">Pixel dimension: </span>
+        <input id="pixelDimension" type="range" min="2" value="5" max="20" oninput="this.nextElementSibling.value = this.value">
+        <output>5</output>
+      </div>
+
+      <!--Dithering settings container-->
+      <div id="ditheringSettingsContainer">
+        <span style="margin-right:5px">Dithering intensity: </span>
+        <input id="ditheringIntensity" type="range" min="0" value="50" max="100" oninput="this.nextElementSibling.value = this.value">
+        <output>50</output>
+      </div>
+    </div> <!--End of customization container-->
+
+
+
+
+  <button id="generateButton" onclick="generatePixelArt()">Generate</button>
+  <div class="row">
+    <div id="outputImageCanvasContainer">
+      <canvas id="outputImageCanvas"></canvas>
+      <div id="spinnerContainer"><div id="spinner"></div><p id="spinnerText"></p></div>
+    </div>
+  </div><!--End of row-->
+
+
+
+  
+</body>
+
+<script>
+let uploadedImage;
+let useCustomColorPalette=false;
+let customColorPalette;
+let numSlides = 5;
+let slideIndex = 0; // This variable represents the index of the active slid, i.e., the one being shown
+showSlide(slideIndex);
+
+//Increments/decrements slideIndex by n
+function slideAdd(n){
+  let arg = slideIndex+n;
+  if(arg>=0) arg=arg%numSlides;
+  else (arg=numSlides-1);
+  showSlide(arg);
+  slideIndex=arg;
+  updateSlider()
+}
+
+function goToSlide(n){
+  n=n%numSlides;
+  showSlide(n);
+  slideIndex = n;
+  updateSlider()
+}
+
+function showSlide(n){
+  //Getting the slide and dot elements
+  let slides = document.getElementsByClassName("slide");
+  let dots = document.getElementsByClassName("dot");
+  //Changing the display of the image and the highlighting of the dot
+  slides[slideIndex].style.display="none";
+  dots[slideIndex].className= dots[slideIndex].className.replace(" active", "");
+  //Displaying the new image and dot
+  slides[n].style.display="block";
+  dots[n].className+=" active";
+}
+
+
+
+document.getElementById("baSlider").addEventListener("input", sliderChange);
+// Before/after slider event handler function
+function sliderChange(event){
+    // Get all slide elements
+    let elements = document.querySelectorAll("div.slide");
+    let visibleSlide;
+    // find the slide that is visible (being displayed)
+    for(let element of elements){
+        if(element.style.display=="block") visibleSlide = element;
+    }
+    // Get the new slider value
+    let pos = event.target.value;
+    // Adjust the width of the before image
+    visibleSlide.querySelector("div.beforeImageContainer").style.width = pos+"%";
+    let offset = (pos - 50)/100.0 * 6; // An offset for the slider button to allign it with the slider
+    let totalOffset= 15 + offset; //The offset including the translation which is half the size of the button
+    //adjust the position of the slider button
+    document.querySelector("div.sliderButton").style.left = "calc(" + pos + "% " +"- "+totalOffset+"px )";
+}
+
+window.addEventListener("load", ba);
+window.addEventListener("resize", ba);
+function ba(event){
+  for (let i = 0; i<numSlides;i++){
+    let element = document.getElementById("image_" + i + "a");
+    let element2 = document.getElementById("image_" + i + "b");
+    let container = document.getElementById("slideshow");
+
+    let width = container.offsetWidth;
+    let height = container.offsetHeight;
+
+    element.style.maxWidth = width +"px";
+    element.style.maxHeight=height+ "px";
+    element.style.top = height/2 +"px";
+    element.style.left = width/2 +"px";
+    element.style.transform = "translate(-50%, -50%)";
+
+    element2.style.maxWidth = width +"px";
+    element2.style.maxHeight=height+ "px";
+    element2.style.top = height/2 +"px";
+    element2.style.left = width/2 +"px";
+    element2.style.transform = "translate(-50%, -50%)";
+  }
+  
+
+}
+// Makes sure the before and after slider reflects the difference correctly when the slide has been changed
+// i.e. without this function if you change the slider position and then change the slide, the rendered slide would
+// reflect the default 50% point between the before and after images instead of the value determined by the slider
+function updateSlider(){
+  let slider = document.getElementById('baSlider');
+  let visibleSlide =document.querySelector('div.slide[style*="display: block"]'); // fragile
+  let pos = slider.value;
+  visibleSlide.querySelector("div.beforeImageContainer").style.width = (pos + "%");
+
+}
+
+// Code for the uploadBox functionality
+
+let uploadBox = document.getElementById("uploadBox");
+// Removing the default behavior of the upload box drag and drop events
+["dragenter", "dragover", "dragleave", "drop"].forEach(eventName=> {
+  uploadBox.addEventListener(eventName, preventDefaultBehaviour);
+});
+
+//Adding the appropriate even-handlers to the upload box
+["dragenter", "dragover"].forEach(eventName=>{
+  uploadBox.addEventListener(eventName, highlight);
+});
+
+["dragleave", "drop"].forEach(eventName=> {
+  uploadBox.addEventListener(eventName, unHighlight);
+});
+// Adding event listenr to the uploadBox
+uploadBox.addEventListener("drop", handleDrop);
+// Adding Event listener to the upload button
+document.getElementById("fileup").addEventListener("change", handleUpload);
+
+// Stops default event behaviour and propagation
+function preventDefaultBehaviour(event){
+  event.preventDefault();
+  event.stopPropagation();
+}
+
+function highlight(event){
+  uploadBox.classList.add("highlight");
+}
+function unHighlight(event){
+  uploadBox.classList.remove("highlight");
+}
+function handleDrop(event){
+  uploadedImage = event.dataTransfer.files.item(0);
+  let imageName = document.getElementById("selectedImage");
+  imageName.innerHTML = uploadedImage.name;
+  displayUploadedImage(uploadedImage);
+}
+function handleUpload(event){
+  uploadedImage = event.target.files.item(0);
+  let imageName = document.getElementById("selectedImage");
+  imageName.innerHTML = uploadedImage.name;
+  displayUploadedImage(uploadedImage);
+}
+function displayUploadedImage(image){
+  fileReader = new FileReader();
+  output = document.getElementById("UploadedImagePreview");
+  fileReader.addEventListener("load", ()=>{
+    output.src = fileReader.result;
+  });
+  if(image){
+    fileReader.readAsDataURL(image);
+  }
+}
+
+// This function is to be called when there is a selected image which name is held in the selectedImage element
+function generatePixelArt(){
+  // No image slected
+  if(typeof uploadedImage == "undefined") return;
+  //Draw the image on the hidden canvas
+  let canvas = document.getElementById("outputImageCanvas");
+  //let ctx = canvas.getContext("2d");
+  let img = new Image();
+  fileReader = new FileReader();
+
+  // Reading image into the img variable
+  fileReader.addEventListener("load", ()=>{
+    img.src = fileReader.result;
+  });
+  fileReader.readAsDataURL(uploadedImage);
+
+  // Drawing image on the canvas
+  img.addEventListener("load", ()=>{
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    let ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0);
+    
+    //Getitng spinner, setting its animatpion, and displaying it
+    let spinner = document.getElementById("spinner");
+    let spinnerContainer = document.getElementById("spinnerContainer");
+    spinner.style.animation= "spin 2s linear infinite";
+    spinner.style.webkitAnimation="spin 2s linear infinite";
+    spinnerContainer.style.display = "block";
+    let spinnerText = document.getElementById("spinnerText");
+    // Creating a webworker to handle the handle the conversion on another thread
+    // and avoid freezing the webpage
+    let worker = new Worker("offscreencanvas.js");
+    worker.onmessage = function(event){
+      if ( event.data instanceof ImageData) {
+        // When the webworker posts the ImageData it means the conversion is done,
+        // so remove the spinner and put the image data in the canvas 
+        spinnerContainer.style.display = "none";
+        spinner.style.animation = "none";
+        spinner.style.webkitAnimation= "none";
+        ctx.putImageData(event.data, 0, 0);
+      }
+      else {
+        // Inform the user of the state of the conversion
+        spinnerText.innerHTML = event.data.stage;
+      }
+    }
+  let imageData = ctx.getImageData(0,0, canvas.width, canvas.height);
+  if(document.getElementById("autoPaletteChecked").checked){
+    worker.postMessage({customPalette:false, imageData:imageData, paletteSize:parseInt(document.getElementById("paletteSizeSelect").value,10),
+     ditheringIntensity: parseInt(document.getElementById("ditheringIntensity").value,10),
+     pixelDimension:parseInt(document.getElementById("pixelDimension").value,10)});
+  }
+  else{
+    let colors = colorPaletteContainerToRGBA(document.getElementById("selectedPalette"));
+    worker.postMessage({customPalette:true, imageData:imageData, palette:colors,
+     ditheringIntensity:document.getElementById("ditheringIntensity").value,
+     pixelDimension:document.getElementById("pixelDimension").value});
+  }
+  });
+}
+function colorPaletteContainerToRGBA(container){
+  let colorBoxes = Array.from(container.children);
+  let colors =[];
+  for (let colorBox of colorBoxes){
+    let rgbStr = colorBox.style.backgroundColor;
+    let color = "";
+    for (let i =0; i<rgbStr.length;i++){
+      if(!isNaN(parseInt(rgbStr[i],10))){
+        color+=rgbStr[i];
+      }
+      else if (color.length != 0){
+        colors.push(parseInt(color));
+        color="";
+      }
+    }
+    colors.push(255);
+  }
+  console.log(colors);
+  return colors;
+}
+function autoPaletteChecked(){
+  document.getElementById("autoGenPaletteConfigContainer").style.display = "block";
+  document.getElementById("customPalleteConfigContainer").style.display = "none";
+}
+function customPaletteChecked(){
+  document.getElementById("customPalleteConfigContainer").style.display = "block";
+  document.getElementById("autoGenPaletteConfigContainer").style.display = "none";
+  
+}
+//Show the custom palettes when the dropdown menu is clicked
+function showCustomPaletteDropdown(){
+  let customPaletteDropdown = document.getElementById("customPaletteDropdown");
+  let customPaletteSelect = document.getElementById("customPaletteSelect");
+  if(customPaletteDropdown.style.display == "block"){
+    customPaletteDropdown.style.display = "none";
+    customPaletteSelect.style.borderBottomLeftRadius = "3px";
+    customPaletteSelect.style.borderBottomRightRadius = "3px";
+  }
+  else{ 
+    customPaletteDropdown.style.display = "block";
+    customPaletteSelect.style.borderBottomLeftRadius = "0";
+    customPaletteSelect.style.borderBottomRightRadius = "0";
+  }
+}
+// Loading in custom color palettes from a json file
+window.addEventListener("load", loadCustomPalettes);
+function loadCustomPalettes(){
+  let customPaletteDropdown = document.getElementById("customPaletteDropdown");
+  fetch('./colorPalettes.json')  // Fetch the JSON file in the current directory
+  .then(response => response.json())  // Parse the JSON data
+  .then(data => {
+    for(let palette in data){
+      let customPaletteContainer = document.createElement('div');
+      customPaletteContainer.className ="customPaletteContainer";
+      for(let color of data[palette]){  
+        let colorBoxDisplay = document.createElement('div');
+        colorBoxDisplay.className = "colorBoxDisplay";
+        colorBoxDisplay.style.backgroundColor = "#"+color;
+        customPaletteContainer.appendChild(colorBoxDisplay);
+      }
+      customPaletteContainer.addEventListener("click",customPaletteContainerClicked);
+      customPaletteDropdown.appendChild(customPaletteContainer);
+    }
+    //Adding a default palette as selected
+    let selectedPalette = document.getElementById("selectedPalette");
+    const children2 = Array.from(customPaletteDropdown.firstChild.children);
+    for (let child of children2){
+      selectedPalette.appendChild(child.cloneNode(true));
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
+
+// Event handler to select the clicked custom palette
+function customPaletteContainerClicked(){
+  let selectedPalette = document.getElementById("selectedPalette");
+  const children = Array.from(selectedPalette.children);
+
+  for (let child of children){
+    selectedPalette.removeChild(child);
+  }
+  const children2 = Array.from(this.children);
+  for (let child of children2){
+    selectedPalette.appendChild(child.cloneNode(true));
+  }
+}
+</script>
+
+
+
+
+
+
+</html>

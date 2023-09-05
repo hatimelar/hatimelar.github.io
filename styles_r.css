@@ -1,0 +1,599 @@
+html{
+  font-family:'Lato', 'Lucida Sans', 'Lucida Sans Regular', sans-serif;
+  font-size: calc(15px + 0.390625vw);
+}
+*{
+  box-sizing: border-box;
+}
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+
+[class*="col-"] {
+  float: left;
+  padding: 15px;
+}
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+body{
+  margin: 0;
+  background-Color: #222831;
+  /*background-Color: rgb(50, 51, 56);*/
+}
+/* Navigation bar links*/
+a.navitem {
+  float: left;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  padding: 13px;
+  text-decoration: none;
+  font-size: 15px;
+  font-family: 'Lato', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
+}
+/* Navigation bar links except for the .active types*/
+.navitem:hover:not(.active){
+  background-color: rgb(32, 32, 32);
+  color:black;
+  border-bottom-width: medium;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(32, 32, 32);
+}
+/* The link that the page is pointing at will belong to this class*/
+.active.navitem{
+  background-color: rgb(30, 30, 30) !important;
+  border-bottom-width: medium;
+  border-bottom-style: solid;
+  border-bottom-color: white;
+}
+.logo{
+  width: 15%;
+  display: block;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* The navigation bar*/
+.nav{
+  width: 100%;
+  overflow: hidden;
+  background-Color: rgb(0, 0, 0);
+  top:0;
+
+  
+}
+
+.introContent h1{
+  font-family: 'Lato','Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin:0px;
+  padding:0px;
+  font-size: 60px;
+}
+h2{
+  font-family: 'Lato','Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size:30px;
+  margin:0px;
+  padding:0px;
+}
+/* Google material-icons*/
+.material-icons{
+  vertical-align: middle;
+}
+/* The introductary content div*/
+.introContent{
+  float:left;
+  padding: 50px;
+  box-sizing:border-box;
+}
+/* The slide show container*/
+#slideshowContainer{
+  position:relative;
+  padding: 50px;
+}
+#slideshow{
+  height: 70vh;
+  width:100%;
+  position:relative;
+  background-color: rgba(0, 0, 0, .3);
+}
+.slide img{
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  max-height: 100%;
+}
+/* For containers that hold images which are displayed on the slideshow*/
+.slide{
+  position:absolute;
+  width:100%;
+  height:100%;
+  display:none;
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+  background-color: rgba(0, 0, 0, .3);
+}
+.imgNumber{
+  position: absolute;
+  font-size: 12px;
+  padding: 8px 8px;
+  color: white;
+}
+/*Slideshow control buttons*/
+.button{
+  cursor: pointer;
+  position:absolute;
+  box-sizing: border-box;
+  padding:10px;
+  background-color:rgba(0,0,0,0);
+  top: 50%;
+  transform: translate(0%, -50%);
+  user-select: none;
+}
+/* Right/left slideshow control buttons*/
+.buttonRight{
+  right: 0px;
+  z-index: 2;
+}
+.buttonLeft{
+  left: 0px;
+  z-index: 2;
+}
+.button:hover{
+  background-color:rgba(0,0,0,0.4);
+}
+.button:hover .material-icons{
+  color: rgba(255, 255, 255, 1);
+}
+/*Slideshow control button icon*/
+.buttonIcon{
+  font-size:30px;
+  color:rgba(255, 255, 255, .3);
+}
+/*Slideshow navigation dot*/
+.dot{
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  background-color: rgba(255,255,255,0.2);
+  display: inline-block;
+  text-align: center;
+}
+.slideShowDots{
+  text-align: center;
+  padding: 0px;
+  user-select: none;
+}
+.dot:hover:not(){
+  background-color: rgba(255,255,255,1);
+}
+.dot:hover, .active.dot{
+  background-color: rgba(255,255,255,.6);;
+}
+.beforeImageContainer{
+  overflow: hidden;
+  position:absolute;
+  height:100%;
+  width:50%;
+}
+.afterImageContainer{
+  overflow: hidden;
+  position:absolute;
+  height:100%;
+  width:100%;
+}
+.image{
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+input.slider {
+	width: 100%;
+	height: 100%;
+	outline: none;
+	background-color: transparent;
+	position: absolute;
+	margin: 0px;
+	z-index: 1;
+	cursor: pointer;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	transition: 0.25s all ease-in-out;
+	-moz-transition: 0.25s all ease-in-out;
+	-webkit-transition: 0.25s all ease-in-out;
+  margin-left: 0px;
+}
+
+
+input.slider::-moz-range-thumb {
+	width: 6px;
+	height: 70vh;
+	background-color: white;
+	cursor: pointer;
+  border: none;
+}
+
+input.slider::-webkit-slider-thumb {
+	width: 6px;
+	height: 70vh;
+	background-color: white;
+	cursor: pointer;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+}
+div.sliderButton {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	-moz-broder-radius: 50%;
+	-webkit-border-radius: 50%;
+	background-color: white;
+	position: absolute;
+	top: calc(50% - 15px); /*Equivalent to top: 50% + translate-50%*/
+	left: calc(50% - 15px);
+	cursor: pointer;
+  user-select: none;
+}
+/*Draws the left arrow for the button slider*/
+div.sliderButton::before{
+  content: "";
+  padding: 4px;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.7);
+  border-width: 3px 0 0 3px;
+  border-radius: 15%;
+
+  top:50%;
+  left: 4px;
+  transform: translate(0, -50%) rotate(-45deg) ;
+  position: absolute;
+}
+/*Draws the right arrow for the button slider*/
+div.sliderButton::after{
+  content: "";
+  padding: 4px;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.7);
+  border-width: 3px 3px 0 0;
+  border-radius: 15%;
+  
+  top:50%;
+  right: 4px;
+  transform: translate(0, -50%) rotate(45deg) ;
+  position: absolute;
+}
+
+#uploadBox{
+  background-color:transparent;
+  border-radius: 15px;
+  border-color: rgba(90, 87, 87, 0.6);
+  border-style:dashed;
+  width:100%;
+  height: 350px;
+  text-align: center;
+  padding:50px;
+  margin:auto;
+}
+#uploadBox.highlight{
+  border-style: solid;
+  border-color: #00ADB5;
+}
+#uploadBoxContainer{
+
+  padding: 25px;
+  background-color:#393E46;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+  width: 95%;
+  max-width: 550px;
+  margin:auto;
+}
+#uploadImageButton{
+  background-color:#00ADB5;
+  box-shadow: 0 1px 1px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  color:white;
+  padding:5px;
+  cursor:pointer;
+}
+#uploadImageButton:hover{
+  background-color:rgba(0, 173, 181,0.5);
+}
+#selectedImageContainer{
+  background-color:#393E46;
+  margin:auto;
+  width:95%;
+  max-width: 550px;
+  border-radius: 5px;
+  padding: 15px;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  overflow-wrap: break-word;
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+}
+#selectedImage{
+  color: rgba(255,255,255,0.7);
+}
+#UploadedImagePreview{
+  margin-top: 10px;
+  max-width: 25%;
+  max-height:25%;
+  display:block;
+  float:right;
+}
+#selectedImageContainer::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+#outputImageCanvas{
+  max-width: 100%;
+  max-height: 100%;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%, -50%);
+}
+#outputImageCanvasContainer{
+  position: relative;
+  height: 70vh;
+  width: 100%;
+  max-width: 750px;
+  margin:auto;
+  background-color:#393E46;
+  margin-bottom: 100px;
+  margin-top:50px;
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+}
+
+#generateButton{
+  padding: 25px;
+  background-color: #393E46;
+  color: rgba(255,255,255,1);
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  font-size: 15px;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+}
+#generateButton:hover{
+  background-color: rgba(57, 62, 70,0.5);
+}
+
+#loadingBox{
+  width: 75%;
+  height: 7%;
+  background-color: white;
+  position:absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+#loadingBar{
+  width:0;
+  height:100%;
+  background-color: green;
+}
+#loadingText{
+  margin: 0;
+  position:absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+#spinner{
+  border: .5rem solid rgba(255, 255,255, 0.6);
+  border-radius: 50%;
+  border-top: .5rem solid #00ADB5;
+  width: 3rem;
+  height: 3rem;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  margin: auto;
+  margin-top:.5rem;
+}
+#customizationContainer{
+  width:100%;
+  max-width:550px;
+  margin:auto;
+}
+#spinnerContainer{
+  display: none;
+  position: absolute;
+  background-color:#393E46;
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+  padding: .5rem 2rem;
+  left:50%;
+  top:50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+}
+#spinnerText{
+  color: rgba(255, 255,255, 0.6);
+  margin-bottom: 0;
+}
+.paletteSelectionCircle{
+  width:2rem;
+  height:2rem;
+  display:block;
+  cursor:pointer;
+  position: relative;
+  float:left;
+}
+.paletteSelectionCircle input{
+  opacity:0;
+  cursor: pointer;
+  position: absolute;
+}
+.paletteSelectionCircle:hover .checkbox{
+  background-color:rgba(255,255,255, 0.3);
+}
+.paletteSelectionCircle input:checked ~ .checkbox{
+  background-color:#00ADB5;
+}
+.checkbox:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.paletteSelectionCircle .checkbox:after {
+  left:50%;
+  top:50%;
+  width: 8px;
+  height: 8px;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  background: white;
+}
+/* Show the checkmark when checked */
+.paletteSelectionCircle input:checked ~ .checkbox:after {
+  display: block;
+}
+.checkbox{
+  position:absolute;
+  left:50%;
+  top:50%;
+  background-color: rgba(255,255,255,.6);
+  border-radius: 50%;
+  height: 60%;
+  width: 60%;
+  transform: translate(-50%,-50%);
+}
+.paletteSelectionText{
+  display: inline-block;
+  height:2rem;
+  line-height: 2rem;
+  margin-left:0.5rem;
+}
+.paletteSelectionContainer{
+  background-color: #393E46;
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+  user-select: none;
+  border-radius: 5px;
+}
+#autoGenPaletteConfigContainer{
+  display:block;
+  border-top: 3px solid #00ADB5;
+  background-color: #393E46;
+  padding: 1rem;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+}
+#customPalleteConfigContainer{
+  display:none;
+  border-top: 3px solid #00ADB5;
+  background-color: #393E46;
+  padding: 1rem;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+}
+
+/*Dropdown select for custom color palettes*/
+#customPaletteSelect{
+  width:100%;
+  background-color:rgba(255, 255, 255, .7);
+  padding-left: 3px;
+  padding-right: 3px;
+  position: relative;
+  border-radius: 3px;
+  cursor:pointer;
+}
+.customPaletteContainer{
+  border: 2px solid gray;
+  border-bottom: none;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.customPaletteContainer:hover{
+  background-color: gray;
+}
+/*The dropdown content*/
+#customPaletteDropdown{
+  display:none;
+  height:300px;
+  background-color:white;
+  overflow:scroll;
+}
+#customPaletteSelectArrow{
+  padding: 4px;
+  box-sizing: border-box;
+  border-style: solid;
+  border-color: rgba(0,0,0,0.7);
+  border-width: 0 3px 3px 0;
+  border-radius: 15%;
+  top:50%;
+  right:5px;
+  transform: translate(0, -75%) rotate(45deg);
+  position: absolute;
+}
+/*An element that represents a color*/
+.colorBoxDisplay{
+  display:inline-block;
+  margin-right:2px;
+  
+  width:20px;
+  height:15px;
+}
+/*Container for the pixelization settings*/
+#pixelSettingsContainer{
+  background-color: #393E46;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top:10px;
+  color:white;
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+}
+/*Container for the dithering settings*/
+#ditheringSettingsContainer{
+  background-color: #393E46;
+  padding: 1rem;
+  border-radius: 5px;
+  margin-top:10px;
+  color:white;
+  box-shadow: 0 4px 8px 5px rgba(0, 0, 0, 0.2), 0 6px 20px 5px rgba(0, 0, 0, 0.19);
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@media only screen and (max-width: 1200px){
+  [class*="col-"]{
+    width: 100%;
+  }
+}
